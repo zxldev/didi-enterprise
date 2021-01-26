@@ -14,6 +14,15 @@ func (d DidiEs) AddDepartment(req *BudgetCenterAddRequest) {
 	}
 }
 
+func (d DidiEs) EditDepartment(req *BudgetCenterEditRequest) {
+	ret, err := d.Post("/river/BudgetCenter/edit", req)
+	if err != nil {
+		log.Print(err.Error())
+	} else {
+		log.Print("添加成功:", string(ret))
+	}
+}
+
 func (d DidiEs) GetDepartment(req *BudgetCenterGetRequest) (department []BudgetCenter) {
 	ret, err := d.Get("/river/BudgetCenter/get", req)
 

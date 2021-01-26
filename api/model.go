@@ -84,6 +84,20 @@ type BudgetCenterAddRequest struct {
 	ExpiryDate  string      `json:"expiry_date,omitempty"`
 }
 
+type BudgetCenterEditRequest struct {
+	BaseParams  `json:",inline"`
+	Id          string      `json:"id"`
+	Name        string      `json:"name,omitempty"`
+	BudgetCycle BudgetCycle `json:"budget_cycle,omitempty"`
+	TotalQuota  float64     `json:"total_quota"`
+	OutBudgetId string      `json:"out_budget_id,omitempty"`
+	LeaderId    string      `json:"leader_id,omitempty"`
+	ParentId    int         `json:"parent_id,omitempty"`
+	MemberUsed  int         `json:"member_used,omitempty"`
+	StartDate   string      `json:"start_date,omitempty"`
+	ExpiryDate  string      `json:"expiry_date,omitempty"`
+}
+
 type BudgetCenterGetRequest struct {
 	BaseParams  `json:",inline"`
 	Name        string     `json:"name,omitempty"`
