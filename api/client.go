@@ -12,17 +12,32 @@ import (
 )
 
 type DidiEs struct {
-	ClientId     string    `json:"client_id"`
-	ClientSecret string    `json:"client_secret"`
-	SignKey      string    `json:"sign_key"`
-	AdminPhone   string    `json:"admin_phone"`
-	CompanyId    string    `json:"company_id"`
-	AccessToken  string    `json:"access_token"`
-	TokenExpire  time.Time `json:"token_expire"`
-	TokenLock    sync.WaitGroup
+	ClientId      string    `json:"client_id"`
+	ClientSecret  string    `json:"client_secret"`
+	SignKey       string    `json:"sign_key"`
+	AdminPhone    string    `json:"admin_phone"`
+	CompanyId     string    `json:"company_id"`
+	AccessToken   string    `json:"access_token"`
+	TokenExpire   time.Time `json:"token_expire"`
+	TokenLock     sync.WaitGroup
+	DepartmentMap map[string]string `json:"department_map"`
 }
 
 var DidiEsClient DidiEs
+
+func (d DidiEs) GenDepartmentMap() error {
+	ds := d.GetDepartment(&BudgetCenterGetRequest{
+		Offset: 0,
+		Length: 100,
+	})
+	d.DepartmentMap = map[string]string{}
+	if len(ds) > 0 {
+		for _, i := range ds {
+			d.DepartmentMap[i.OutBudgetId] = i.Id
+		}
+	}
+	return nil
+}
 
 func (d *DidiEs) Init(ClientId, ClientSecret, SignKey, AdminPhone, CompanyId string) {
 	d.ClientId = ClientId
@@ -30,6 +45,7 @@ func (d *DidiEs) Init(ClientId, ClientSecret, SignKey, AdminPhone, CompanyId str
 	d.SignKey = SignKey
 	d.AdminPhone = AdminPhone
 	d.CompanyId = CompanyId
+	d.GenDepartmentMap()
 }
 
 func (d DidiEs) GetToken() (string, error) {

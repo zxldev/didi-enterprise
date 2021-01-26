@@ -14,22 +14,21 @@ func (d DidiEs) AddDepartment(req *BudgetCenterAddRequest) {
 	}
 }
 
-func (d DidiEs) GetDepartment(req *BudgetCenterGetRequest) (ids []string) {
+func (d DidiEs) GetDepartment(req *BudgetCenterGetRequest) (department []BudgetCenter) {
 	ret, err := d.Get("/river/BudgetCenter/get", req)
 
 	if err != nil {
 		log.Print(err.Error())
+		return nil
 	} else {
 		data := BudgetCenterList{}
 		json.Unmarshal(ret, &data)
 		log.Print(string(ret))
 		if data.Total != "0" {
-			for _, item := range data.Records {
-				ids = append(ids, item.Id)
-			}
+			return data.Records
 		}
 	}
-	return ids
+	return nil
 }
 
 func (d DidiEs) DelDepartment(id string) {
