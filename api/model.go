@@ -234,23 +234,23 @@ type MemberList struct {
 }
 
 type MemberItem struct {
-	Id                     string   `json:"id"`
-	Phone                  string   `json:"phone,omitempty"`
-	Realname               string   `json:"realname,omitempty"`
-	EmployeeNumber         string   `json:"employee_number,omitempty"`            //	no	员工ID（员工在公司的员工号）
-	Email                  string   `json:"email,omitempty"`                      //	no	邮箱
-	Department             string   `json:"department,omitempty"`                 //	no	部门名称（老），后续此参数会去掉
-	BranchName             string   `json:"branch_name,omitempty"`                //	no	所在分公司名称（老），后续此参数会去掉
-	SystemRole             int      `json:"system_role,omitempty"`                //  no	系统角色(0-车辆预定人员，1-普通管理员，2-超级管理员)
-	RoleIds                string   `json:"role_ids,omitempty"`                   //	no	角色（默认为员工），通过角色获取API 。可以填多个，以_分隔。初始管理员、主管不支持新增
-	ImmediateSuperiorPhone string   `json:"immediate_superior_phone,omitempty"`   // no	员工直属上级的手机号码（需为本企业中已存在账号），直属上级可在审批流中担任审批人
-	Residentsname          string   `jsonregulation_id:"residentsname,omitempty"` //	no	常驻地中文
-	UseCompanyMoney        int      `json:"use_company_money,omitempty"`          // no	是否企业支付余额（0-否，1-是）
-	TotalQuota             string   `json:"total_quota,omitempty"`                // no	每月配额
-	IsRemark               int      `json:"is_remark,omitempty"`                  //     no	叫车时备注信息是否必填(0-选填，1-必填，2-按制度填写)
-	BudgetCenterId         string   `json:"budget_center_id,omitempty"`           // no	所在部门ID（新），默认为1（企业）。通过成本中心查询api获取id（类型为1）
-	RegulationId           []string `json:"regulation_id,omitempty"`              // no	用车制度ID（从 9.1用车制度查询 中选取，可以填多个，以_分隔，如 123_456_789）注:如不传用车制度ID,无法使用企业支付
-	SetDismissTime         string   `json:"set_dismiss_time,omitempty"`
-	UseCarConfig           []string `json:"use_car_config"`
-	DismissTime            string   `json:"dismiss_time"`
+	Id                     string     `json:"id"`
+	Phone                  string     `json:"phone,omitempty"`
+	Realname               string     `json:"realname,omitempty"`
+	EmployeeNumber         string     `json:"employee_number,omitempty"`            //	no	员工ID（员工在公司的员工号）
+	Email                  string     `json:"email,omitempty"`                      //	no	邮箱
+	Department             string     `json:"department,omitempty"`                 //	no	部门名称（老），后续此参数会去掉
+	BranchName             string     `json:"branch_name,omitempty"`                //	no	所在分公司名称（老），后续此参数会去掉
+	SystemRole             SystemRole `json:"system_role,omitempty"`                //  no	系统角色(0-车辆预定人员，1-普通管理员，2-超级管理员)
+	RoleIds                string     `json:"role_ids,omitempty"`                   //	no	角色（默认为员工），通过角色获取API 。可以填多个，以_分隔。初始管理员、主管不支持新增
+	ImmediateSuperiorPhone string     `json:"immediate_superior_phone,omitempty"`   // no	员工直属上级的手机号码（需为本企业中已存在账号），直属上级可在审批流中担任审批人
+	Residentsname          string     `jsonregulation_id:"residentsname,omitempty"` //	no	常驻地中文
+	UseCompanyMoney        int        `json:"use_company_money,omitempty"`          // no	是否企业支付余额（0-否，1-是）
+	TotalQuota             string     `json:"total_quota,omitempty"`                // no	每月配额
+	IsRemark               int        `json:"is_remark,omitempty"`                  //     no	叫车时备注信息是否必填(0-选填，1-必填，2-按制度填写)
+	BudgetCenterId         string     `json:"budget_center_id,omitempty"`           // no	所在部门ID（新），默认为1（企业）。通过成本中心查询api获取id（类型为1）
+	RegulationId           []string   `json:"regulation_id,omitempty"`              // no	用车制度ID（从 9.1用车制度查询 中选取，可以填多个，以_分隔，如 123_456_789）注:如不传用车制度ID,无法使用企业支付
+	SetDismissTime         string     `json:"set_dismiss_time,omitempty"`
+	UseCarConfig           []string   `json:"use_car_config"`
+	DismissTime            string     `json:"dismiss_time"`
 }
