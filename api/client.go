@@ -48,6 +48,17 @@ func (d *DidiEs) Init(ClientId, ClientSecret, SignKey, AdminPhone, CompanyId str
 	d.GenDepartmentMap()
 }
 
+/**
+判断是否同一个部门
+*/
+func (d *DidiEs) IsSameDepartment(OutBudgetId, DepartmentId string) bool {
+	if v, ok := d.DepartmentMap[OutBudgetId]; ok {
+		return v == DepartmentId
+	} else {
+		return false
+	}
+}
+
 func (d DidiEs) GetToken() (string, error) {
 	if d.AccessToken == "" || time.Now().Unix() > d.TokenExpire.Unix() {
 		//获取新Token，并且重置过期时间
