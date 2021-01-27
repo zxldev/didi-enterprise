@@ -82,6 +82,36 @@ func (d DidiEs) MemberGet(member *MemberGetRequest) (memberList []MemberItem, er
 }
 
 /**
+批量获取所有信息
+*/
+func (d DidiEs) MemberGetAll(member *MemberGetRequest) (memberList []MemberItem, err error) {
+
+	offset := 0
+	memberList = []MemberItem{}
+	for {
+		clone := *member
+		clone.Offset = offset
+		clone.Length = 100
+		ret, err := d.Get("/river/Member/get", &clone)
+		if err != nil {
+			log.Error(err.Error())
+			return nil, err
+		} else {
+			data := MemberList{}
+			json.Unmarshal(ret, &data)
+			if data.Total < 1 {
+				break
+			}
+			memberList = append(memberList, data.Records...)
+			if data.Total < 100 {
+				break
+			}
+		}
+	}
+	return memberList, nil
+}
+
+/**
 删除用户 删除失败也会离职
 */
 func (d DidiEs) MemberDelete(MemberId string) {
