@@ -68,11 +68,25 @@ func (d DidiEs) MemberGetSingle(email string) (memberItem *MemberItem, err error
 /**
 查询接口
 */
-func (d DidiEs) MemberGet() {
-	ret, err := d.Get("/river/Member/get", &MemberGetRequest{
-		Status: MemberStatusNormal,
-		Offset: 0,
-		Length: 100,
+func (d DidiEs) MemberGet(member *MemberGetRequest) (memberList []MemberItem, err error) {
+	ret, err := d.Get("/river/Member/get", member)
+	if err != nil {
+		log.Error(err.Error())
+		return nil, err
+	} else {
+		data := MemberList{}
+		json.Unmarshal(ret, &data)
+		log.Debug(string(ret))
+		return data.Records, nil
+	}
+}
+
+/**
+删除用户 删除失败也会离职
+*/
+func (d DidiEs) MemberDelete(MemberId string) {
+	ret, err := d.Post("/river/Member/del", &MemberDelRequest{
+		MemberId: MemberId,
 	})
 	if err != nil {
 		log.Print(err.Error())
