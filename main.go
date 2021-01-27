@@ -8,9 +8,7 @@ import (
 )
 
 func main() {
-	api.DidiEsClient.MemberGet()
 	testMember()
-
 }
 
 func init() {
