@@ -25,7 +25,7 @@ type DidiEs struct {
 
 var DidiEsClient DidiEs
 
-func (d DidiEs) GenDepartmentMap() error {
+func (d *DidiEs) GenDepartmentMap() error {
 	ds := d.GetDepartment(&BudgetCenterGetRequest{
 		Offset: 0,
 		Length: 100,
@@ -59,7 +59,7 @@ func (d *DidiEs) IsSameDepartment(OutBudgetId, DepartmentId string) bool {
 	}
 }
 
-func (d DidiEs) GetToken() (string, error) {
+func (d *DidiEs) GetToken() (string, error) {
 	if d.AccessToken == "" || time.Now().Unix() > d.TokenExpire.Unix() {
 		//获取新Token，并且重置过期时间
 		r, err := d.PostAuth("/river/Auth/authorize", AuthorizeRequest{
@@ -99,11 +99,11 @@ func (d *BaseParams) BuildBaseParams(ClientId, AccessToken, CompanyId string) {
 	d.AccessToken = AccessToken
 }
 
-func (d DidiEs) PostAuth(url string, data interface{}) (resp *http.Response, err error) {
+func (d *DidiEs) PostAuth(url string, data interface{}) (resp *http.Response, err error) {
 	return http.Post(ServerApi+url, "application/json", bytes.NewReader(util.SignRequest(data, d.SignKey)))
 }
 
-func (d DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error) {
+func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error) {
 	token, err := d.GetToken()
 	if err != nil {
 		return nil, err
@@ -125,7 +125,7 @@ func (d DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error)
 	}
 }
 
-func (d DidiEs) Get(url string, data BaseParamsBuilder) (ret []byte, err error) {
+func (d *DidiEs) Get(url string, data BaseParamsBuilder) (ret []byte, err error) {
 	token, err := d.GetToken()
 	if err != nil {
 		return nil, err
