@@ -115,7 +115,7 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 		return nil, ErrorNetWork
 	}
 
-	baseresp := BaseReponse{}
+	baseresp := BaseResponse{}
 	json.NewDecoder(resp.Body).Decode(&baseresp)
 
 	if baseresp.Errorno == 0 {
@@ -137,7 +137,7 @@ func (d *DidiEs) Get(url string, data BaseParamsBuilder) (ret []byte, err error)
 		return nil, ErrorNetWork
 	}
 
-	baseresp := BaseReponse{}
+	baseresp := BaseResponse{}
 	json.NewDecoder(resp.Body).Decode(&baseresp)
 
 	if baseresp.Errorno == 0 {

@@ -10,7 +10,7 @@ type BaseParamsBuilder interface {
 	BuildBaseParams(ClientId, AccessToken, CompanyId string)
 }
 
-type BaseReponse struct {
+type BaseResponse struct {
 	Errorno int         `json:"errorno"`
 	Errmsg  string      `json:"errmsg"`
 	Data    interface{} `json:"data"`
@@ -87,6 +87,10 @@ type BudgetCenterAddRequest struct {
 	MemberUsed  int         `json:"member_used,omitempty"`
 	StartDate   string      `json:"start_date,omitempty"`
 	ExpiryDate  string      `json:"expiry_date,omitempty"`
+}
+
+type BudgetCenterAddResp struct {
+	Id string `json:"id"`
 }
 
 type BudgetCenterEditRequest struct {

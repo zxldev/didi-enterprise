@@ -5,12 +5,16 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func (d DidiEs) AddDepartment(req *BudgetCenterAddRequest) {
+func (d DidiEs) AddDepartment(req *BudgetCenterAddRequest) *BudgetCenterAddResp {
 	ret, err := d.Post("/river/BudgetCenter/add", req)
 	if err != nil {
 		log.Print(err.Error())
+		return nil
 	} else {
 		log.Print("添加成功:", string(ret))
+		resp := BudgetCenterAddResp{}
+		json.Unmarshal(ret, &resp)
+		return &resp
 	}
 }
 
@@ -19,7 +23,7 @@ func (d DidiEs) EditDepartment(req *BudgetCenterEditRequest) {
 	if err != nil {
 		log.Print(err.Error())
 	} else {
-		log.Print("添加成功:", string(ret))
+		log.Print("修改成功:", string(ret))
 	}
 }
 
