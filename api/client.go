@@ -19,6 +19,7 @@ type DidiEs struct {
 	CompanyId     string    `json:"company_id"`
 	AccessToken   string    `json:"access_token"`
 	TokenExpire   time.Time `json:"token_expire"`
+	ApiUrl        string    `json:"api_url"`
 	TokenLock     sync.WaitGroup
 	DepartmentMap map[string]string `json:"department_map"`
 }
@@ -39,7 +40,12 @@ func (d *DidiEs) GenDepartmentMap() error {
 	return nil
 }
 
-func (d *DidiEs) Init(ClientId, ClientSecret, SignKey, AdminPhone, CompanyId string) {
+func (d *DidiEs) Init(ClientId, ClientSecret, SignKey, AdminPhone, CompanyId, ApiUrl string) {
+	if ApiUrl == "" {
+		d.ApiUrl = ServerApi
+	} else {
+		d.ApiUrl = ApiUrl
+	}
 	d.ClientId = ClientId
 	d.ClientSecret = ClientSecret
 	d.SignKey = SignKey
@@ -89,8 +95,7 @@ func (d *DidiEs) GetToken() (string, error) {
 }
 
 const (
-	//ServerApi = "http://api.es.xiaojukeji.com"
-	ServerApi = "http://120.92.20.117:8003"
+	ServerApi = "http://api.es.xiaojukeji.com"
 )
 
 func (d *BaseParams) BuildBaseParams(ClientId, AccessToken, CompanyId string) {
@@ -100,7 +105,7 @@ func (d *BaseParams) BuildBaseParams(ClientId, AccessToken, CompanyId string) {
 }
 
 func (d *DidiEs) PostAuth(url string, data interface{}) (resp *http.Response, err error) {
-	return http.Post(ServerApi+url, "application/json", bytes.NewReader(util.SignRequest(data, d.SignKey)))
+	return http.Post(d.ApiUrl+url, "application/json", bytes.NewReader(util.SignRequest(data, d.SignKey)))
 }
 
 func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error) {
@@ -109,7 +114,7 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 		return nil, err
 	}
 	data.BuildBaseParams(d.ClientId, token, d.CompanyId)
-	resp, err := http.Post(ServerApi+url, "application/json", bytes.NewReader(util.SignRequest(data, d.SignKey)))
+	resp, err := http.Post(d.ApiUrl+url, "application/json", bytes.NewReader(util.SignRequest(data, d.SignKey)))
 
 	if err != nil {
 		return nil, ErrorNetWork
@@ -131,7 +136,7 @@ func (d *DidiEs) Get(url string, data BaseParamsBuilder) (ret []byte, err error)
 		return nil, err
 	}
 	data.BuildBaseParams(d.ClientId, token, d.CompanyId)
-	resp, err := http.Get(ServerApi + url + "?" + util.SignGetRequest(data, d.SignKey))
+	resp, err := http.Get(d.ApiUrl + url + "?" + util.SignGetRequest(data, d.SignKey))
 
 	if err != nil {
 		return nil, ErrorNetWork
