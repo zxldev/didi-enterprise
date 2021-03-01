@@ -15,7 +15,7 @@ func (d DidiEs) MemberSingle() {
 /**
 修改接口
 */
-func (d DidiEs) MemberEdit(email string, memberData Member) (err error) {
+func (d DidiEs) MemberEditByEmail(email string, memberData Member) (err error) {
 
 	member, err := d.MemberGetSingle(email)
 	if err != nil {
@@ -28,6 +28,27 @@ func (d DidiEs) MemberEdit(email string, memberData Member) (err error) {
 	}
 	_, err = d.Post("/river/Member/edit", &MemberEditResuest{
 		MemberId: member.Id,
+		Data:     string(data),
+	})
+	if err != nil {
+		return
+	} else {
+		return nil
+	}
+
+}
+
+/**
+修改接口
+*/
+func (d DidiEs) MemberEdit(id string, memberData Member) (err error) {
+
+	data, err := json.Marshal(memberData)
+	if err != nil {
+		return
+	}
+	_, err = d.Post("/river/Member/edit", &MemberEditResuest{
+		MemberId: id,
 		Data:     string(data),
 	})
 	if err != nil {
