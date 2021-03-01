@@ -17,9 +17,10 @@ func init() {
 	sign_key := flag.String("sign_key", "", "sign_key")
 	admin_phone := flag.String("admin_phone", "", "admin_phone")
 	company_id := flag.String("company_id", "", "company_id")
+	api_url := flag.String("api_url", "", "api_url")
 
 	flag.Parse()
-	api.DidiEsClient.Init(*client_id, *client_secret, *sign_key, *admin_phone, *company_id)
+	api.DidiEsClient.Init(*client_id, *client_secret, *sign_key, *admin_phone, *company_id, *api_url)
 }
 
 func testMember() {
