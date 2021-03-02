@@ -61,6 +61,34 @@ func (d DidiEs) MemberEdit(id string, memberData Member) (err error) {
 
 /**
 获取单个用户接口
+// ！！ 用户可以在后台更改自己的邮箱，请以用户编码为准，只有首次才能以用户邮箱为准
+*/
+func (d DidiEs) MemberGetSingleByEmployCode(code string) (memberItem *MemberItem, err error) {
+	ret, err := d.Get("/river/Member/get", &MemberGetRequest{
+		Status:         MemberStatusNormal,
+		EmployeeNumber: code,
+		Offset:         0,
+		Length:         100,
+	})
+	if err != nil {
+		log.Print(err.Error())
+		return
+	} else {
+		data := MemberList{}
+		json.Unmarshal(ret, &data)
+		if data.Total == 1 {
+			memberItem = &data.Records[0]
+			return
+		} else if data.Total == 0 {
+			return nil, ErrorMemberNotFount
+		} else {
+			return nil, ErrorMemberFound
+		}
+	}
+}
+
+/**
+获取单个用户接口
 */
 func (d DidiEs) MemberGetSingle(email string) (memberItem *MemberItem, err error) {
 	ret, err := d.Get("/river/Member/get", &MemberGetRequest{
