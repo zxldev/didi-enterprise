@@ -129,8 +129,8 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 	log.Info("url:", url, ",resp:", string(bodybyte))
 	json.Unmarshal(bodybyte, &baseresp)
 
-	if baseresp.Errorno == 0 {
-		log.Info(baseresp.Errorno, "success")
+	if baseresp.Errno == 0 {
+		log.Info(baseresp.Errno, "success")
 		return json.Marshal(baseresp.Data)
 	} else {
 		log.Info("curl post ", "failed")
@@ -153,7 +153,7 @@ func (d *DidiEs) Get(url string, data BaseParamsBuilder) (ret []byte, err error)
 	baseresp := BaseResponse{}
 	json.NewDecoder(resp.Body).Decode(&baseresp)
 
-	if baseresp.Errorno == 0 {
+	if baseresp.Errno == 0 {
 		return json.Marshal(baseresp.Data)
 	} else {
 		return nil, errors.New(baseresp.Errmsg)

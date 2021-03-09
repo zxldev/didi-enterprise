@@ -11,9 +11,9 @@ type BaseParamsBuilder interface {
 }
 
 type BaseResponse struct {
-	Errorno int         `json:"errorno"`
-	Errmsg  string      `json:"errmsg"`
-	Data    interface{} `json:"data"`
+	Errno  int         `json:"errno"`
+	Errmsg string      `json:"errmsg"`
+	Data   interface{} `json:"data"`
 }
 
 type AuthorizeRequest struct {
