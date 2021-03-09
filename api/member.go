@@ -31,7 +31,7 @@ func (d DidiEs) MemberEditByEmail(email string, memberData Member) (err error) {
 		Data:     string(data),
 	})
 	if err != nil {
-		return
+		return err
 	} else {
 		return nil
 	}
@@ -52,7 +52,7 @@ func (d DidiEs) MemberEdit(id string, memberData Member) (err error) {
 		Data:     string(data),
 	})
 	if err != nil {
-		return
+		return err
 	} else {
 		return nil
 	}

@@ -132,7 +132,7 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 	if baseresp.Errorno == 0 {
 		return json.Marshal(baseresp.Data)
 	} else {
-		return nil, errors.New(baseresp.Errmsg)
+		return bodybyte, errors.New(baseresp.Errmsg)
 	}
 }
 
