@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
+
 	"github.com/zxldev/didi-enterprise/util"
 	"io/ioutil"
 	"net/http"
