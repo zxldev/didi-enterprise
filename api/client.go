@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	log "github.com/sirupsen/logrus"
-
 	"github.com/zxldev/didi-enterprise/util"
 	"io/ioutil"
 	"net/http"
@@ -126,14 +124,11 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 	baseresp := BaseResponse{}
 
 	bodybyte, err := ioutil.ReadAll(resp.Body)
-	log.Info("url:", url, ",resp:", string(bodybyte))
 	json.Unmarshal(bodybyte, &baseresp)
 
 	if baseresp.Errno == 0 {
-		log.Info(baseresp.Errno, "success")
 		return json.Marshal(baseresp.Data)
 	} else {
-		log.Info("curl post ", "failed")
 		return bodybyte, errors.New(baseresp.Errmsg)
 	}
 }
