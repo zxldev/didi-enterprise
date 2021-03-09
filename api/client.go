@@ -130,8 +130,10 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 	json.Unmarshal(bodybyte, &baseresp)
 
 	if baseresp.Errorno == 0 {
+		log.Info(baseresp.Errorno, "success")
 		return json.Marshal(baseresp.Data)
 	} else {
+		log.Info("curl post ", "failed")
 		return bodybyte, errors.New(baseresp.Errmsg)
 	}
 }

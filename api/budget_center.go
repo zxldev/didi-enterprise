@@ -20,6 +20,7 @@ func (d DidiEs) AddDepartment(req *BudgetCenterAddRequest) *BudgetCenterAddResp 
 
 func (d DidiEs) EditDepartment(req *BudgetCenterEditRequest) {
 	ret, err := d.Post("/river/BudgetCenter/edit", req)
+	log.Println("post response error :", err)
 	if err != nil {
 		log.Print(err.Error())
 	} else {
