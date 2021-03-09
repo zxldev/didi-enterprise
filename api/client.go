@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"github.com/prometheus/common/log"
 	"github.com/zxldev/didi-enterprise/util"
+	"io/ioutil"
 	"net/http"
 
 	"sync"
@@ -121,7 +123,10 @@ func (d *DidiEs) Post(url string, data BaseParamsBuilder) (ret []byte, err error
 	}
 
 	baseresp := BaseResponse{}
-	json.NewDecoder(resp.Body).Decode(&baseresp)
+
+	bodybyte, err := ioutil.ReadAll(resp.Body)
+	log.Info("url:", url, ",resp:", string(bodybyte))
+	json.Unmarshal(bodybyte, &baseresp)
 
 	if baseresp.Errorno == 0 {
 		return json.Marshal(baseresp.Data)
