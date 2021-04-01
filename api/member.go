@@ -148,6 +148,7 @@ func (d DidiEs) MemberGetAll(member *MemberGetRequest) (memberList []MemberItem,
 				break
 			}
 		}
+		offset += 100
 	}
 	return memberList, nil
 }
